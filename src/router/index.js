@@ -1,25 +1,50 @@
-import { createRouter, createWebHistory } from 'vue-router'
-import HomeView from '../views/HomeView.vue'
+import { createRouter, createWebHistory } from "vue-router";
+import store from "@/store";
 
-const routes = [
-  {
-    path: '/',
-    name: 'home',
-    component: HomeView
-  },
-  {
-    path: '/about',
-    name: 'about',
-    // route level code-splitting
-    // this generates a separate chunk (about.[hash].js) for this route
-    // which is lazy-loaded when the route is visited.
-    component: () => import(/* webpackChunkName: "about" */ '../views/AboutView.vue')
-  }
-]
+import MainPage from "@/router/pages/MainPage";
+import LogInPage from "@/router/pages/LogInPage";
+import RegistrationPage from "@/router/pages/RegistrationPage";
+import UserProfile from "@/router/pages/UserData/UserProfilePage";
 
-const router = createRouter({
-  history: createWebHistory(process.env.BASE_URL),
-  routes
-})
-
-export default router
+export default createRouter({
+	history: createWebHistory(),
+	routes: [
+		{
+			component: MainPage,
+			path: "/",
+		},
+		{
+			component: LogInPage,
+			path: "/login",
+			beforeEnter: (to, from, next) => {
+				if (!store.getters.userLogged) {
+					next();
+				} else {
+					next({ path: "/" });
+				}
+			},
+		},
+		{
+			component: RegistrationPage,
+			path: "/registration",
+			beforeEnter: (to, from, next) => {
+				if (!store.getters.userLogged) {
+					next();
+				} else {
+					next({ path: "/" });
+				}
+			},
+		},
+		{
+			component: UserProfile,
+			path: "/profile",
+			beforeEnter: (to, from, next) => {
+				if (store.getters.userLogged) {
+					next();
+				} else {
+					next({ path: "/login" });
+				}
+			},
+		},
+	],
+});

@@ -1,30 +1,47 @@
 <template>
-  <nav>
-    <router-link to="/">Home</router-link> |
-    <router-link to="/about">About</router-link>
-  </nav>
-  <router-view/>
+	<NavBar />
+	<router-view />
+	<SomeFooter />
 </template>
 
+<script>
+	import NavBar from "@/components/NavBar.vue";
+	import SomeFooter from "@/components/SomeFooter.vue";
+
+	export default {
+		components: {
+			NavBar,
+			SomeFooter,
+		},
+
+		mounted() {},
+	};
+</script>
+
 <style lang="scss">
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-}
+	* {
+		margin: 0;
+		padding: 0;
+		box-sizing: border-box;
+		outline: none;
+		color: #009393;
+	}
 
-nav {
-  padding: 30px;
+	html,
+	body,
+	#app {
+		width: 100%;
+		height: 100%;
+	}
 
-  a {
-    font-weight: bold;
-    color: #2c3e50;
+	body {
+		background: #1a1f26;
+	}
 
-    &.router-link-exact-active {
-      color: #42b983;
-    }
-  }
-}
+	#app {
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		justify-content: space-between;
+	}
 </style>
